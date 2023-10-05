@@ -1,6 +1,3 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.mystudy.vo.EmployeeVO"%>
-<%@page import="java.util.List"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -19,9 +16,7 @@
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	//DB데이터 저장용 변수 선언
-	List<EmployeeVO> list = null;
-	int cnt = 0;
+	int cnt = 0; //전체 인원 수
 	
 	try {
 		//1. JDBC 드라이버 로딩
@@ -39,41 +34,9 @@
 		
 		//4. SQL 실행 결과에 대한 처리
 		//4-1. SQL문 실행
-		rs = pstmt.executeQuery();		
-		
-		list = new ArrayList<EmployeeVO>();
-		while (rs.next()) { 
-			EmployeeVO vo = new EmployeeVO(
-						rs.getInt("SABUN"),
-						rs.getString("NAME"),
-						rs.getDate("REGDATE"),
-						rs.getInt("PAY"));
-			/*	똑같은 코드 더 간단하게(위 참고)	
-			vo.setSabun(rs.getInt("SABUN"));
-			vo.setName(rs.getString("NAME"));
-			vo.setRegdate(rs.getDate("REGDATE"));
-			vo.setPay(rs.getInt("PAY"));
-			*/
-			list.add(vo);
-		}	
-		rs.close();
-		
-		//전체 데이터 건수 확인
-		rs = pstmt.executeQuery("SELECT COUNT(*) AS CNT FROM EMPLOYEE");
-		if (rs.next()) {
-			cnt = rs.getInt("CNT");
-		}
-	} catch(Exception e) {
-		e.printStackTrace();
-	} finally {
-		//5. 클로징 처리에 의한 자원 반납
-		try {
-			if (rs != null) rs.close();
-			if (pstmt != null) pstmt.close();
-			if (conn != null) conn.close();
-		} catch(Exception e) {}
-	}
-%>	
+		rs = pstmt.executeQuery();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -103,14 +66,14 @@
 			</tr>
 			--%>
 <%		
-		for (EmployeeVO vo : list) { %>
+		while (rs.next()) { %>
 			<tr>
-				<td><%=vo.getSabun() %></td>
-				<td><%=vo.getName() %></td>
-				<td><%=vo.getRegdate() %></td>
-				<td><%=vo.getPay() %></td>
+				<td><%=rs.getInt("SABUN") %></td>
+				<td><%=rs.getString("NAME") %></td>
+				<td><%=rs.getDate("REGDATE") %></td>
+				<td><%=rs.getInt("PAY") %></td>
 				<td>
-					<a href="detail.jsp?sabun=<%=vo.getSabun() %>">상세보기</a>
+					<a href="detail.jsp?sabun=<%=rs.getInt("SABUN") %>">상세보기</a>
 				</td>
 			</tr>
 <%			
@@ -118,7 +81,24 @@
 %>	
 		</tbody>
 	</table>
-	<p>전체인원 : <%=cnt %>명</p>
 	<p><a href="addForm.jsp">사원등록</a></p>
 </body>
 </html>
+<%		
+	} catch(Exception e) {
+		e.printStackTrace();
+	} finally {
+		//5. 클로징 처리에 의한 자원 반납
+		try {
+			if (rs != null) rs.close();
+			if (pstmt != null) pstmt.close();
+			if (conn != null) conn.close();
+		} catch(Exception e) {}
+	}
+%>	
+
+
+
+
+
+
