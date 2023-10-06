@@ -1,0 +1,72 @@
+■ EL(Expression Language) : 표현언어
+	1. 표현식을 대신해서 사용 : ${ }
+		<%=데이터 %> :::: ${데이터 } : 데이터 - 상수, 계산식, ....
+	2. 사용할 데이터가 반드시 scope 상에 존재해야 한다
+		scope 객체 : pageContext, request, session, application
+		해당 scope 상에 setAttribute 설정된 변수(속성) 값만 사용 가능
+		(주의 : 로컬변수에 있는 데이터 사용 못함)
+	3. 같은 이름이 다른 scope 상에 존재하는 경우 접근 우선순위가 적용
+		scope 명칭 : page < request < session < application
+		저장변수명 : pageContext -> request -> session -> application
+		(단, scope 지정 없으면 page ---> application 순으로 찾는다
+		명시적으로 scope 지정하면 해당 scope에서만 찾는다)
+	4. 저장객체 타입(Tomcat 기준)
+		pageContext : javax.servlet.jsp.PageContext
+		request : javax.servlet.http.HttpServletRequest
+		session : javax.servlet.http.HttpSession
+		application : javax.servlet.ServletContext
+		
+■ EL 객체 표현방식
+    - 객체 표현 방식 : .(점), [](대괄호) 사용
+      사용예) ${param.name}, ${param["name"]}, ${param['name']}
+    - 명칭에 특수기호나 한글이 있는 경우는 [](대괄호)만 사용 가능
+      사용예) ${header["user-agent"]} - 사용가능
+              ${header.user-ageing} - 에러발생
+              ${student["성명"] - 사용가능
+              ${student.성명} - 에러발생
+
+■ EL 제공 내장객체
+    - EL 사용 4가지 영역(scope)에 접근시 사용 내장 객체
+      ● pageScope, requestScope, sessionScope, applicationScope
+    
+    - 폼(form) 값 처리 위한 내장 객체
+      ● param, paramValues
+    
+    - 쿠키(cookie), Http 헤더(header), 컨텍스트 초기화 매개변수 접근용 내장객체
+      ● cookie : 쿠키 값을 읽을 때 사용
+      ● header : request.getHeader(헤더명)과 동일하게 헤더값을 읽을 때 사용
+      ● headerValues : reqeust.getHeaders(헤더명)과 동일하게 
+        헤더값을 배열 형태로 읽을 때 사용
+      ● initParam : web.xml에 설정한 컨텍스트 초기화 매개변수 값 읽을 때 사용
+      ● pageContext : JSP의 pageContext 내장 객체와 동일한 역할
+
+■ EL 사용 연산자
+    - 산술연산자 : +, -, *, / 또는 div, % 또는 mod
+    - 비교연산자(결과 true, false)
+        부호 : >,  <,  >=, <=, ==, !=
+        영문 : gt, lt, ge, le, eq, ne
+    - 논리연산자(결과 true, false)
+        && 또는 and, || 또는 or, ! 또는 not
+    - empty 연산자(결과 true, false)
+        true 인 경우 : null, 빈문자열(""), 길이가 0인 배열, size가 0인 컬렉션
+    - 삼항연산자
+        ${조건 ? "true일때" : "false일때" }
+             
+■ EL 사용할 수 있는 위치
+    - HTML, CSS, JavaScript 작성 영역
+    - 액션태그, JSTL의 속성값	
+■ EL 사용할 수 없는 위치
+    - JSP 스크립트 요소(선언부, 표현식, 스크립트릿)
+
+==================================
+JSTL(JSP Standard Tag Labrary)
+	0. 라이브러리 구하기(인터넷)
+		다운로드 : https://tomcat.apache.org/download-taglibs.cgi
+		다운로드 : https://mvnrepository.com/ > jstl 검색
+	1. 라이브러리 등록
+		WebContent > WEB-INF > lib > jar 파일 등록
+	2. JSTL 디렉티브(지시어) taglib 추가
+		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
+
+		
