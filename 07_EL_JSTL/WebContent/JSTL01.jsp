@@ -119,14 +119,50 @@
 	<hr>
 	
 	<p>(실습)1~10 까지의 합계 구하기</p>
-	<c:set var="sum" value="0" />
+	<c:set var="sum" value="0" scope="page"/> <%-- 변수 생략 가능 --%>
 	<c:forEach var="i" begin="1" end="10" step="1">
-    	<c:set var="sum" value="${sum+i}" />
+    	<c:set var="sum" value="${sum+i}" /> <%-- 연산처리 --%>
+    	<%-- ${sum = sum + i } --%> <%-- 연산과정 화면에 출력(EL 사용) --%>
+    	<%-- ${sum += i } --%> <%-- 복합 대입 연산자(문자열 붙이기라서 필요(X) : 01 02 03...) --%>
 	</c:forEach>
-	${sum} &nbsp;
+		<h3>sum : ${sum} &nbsp;</h3>
 	<hr><hr>
 	
+	<%-- ==== for 문 집합객체 처리 ==== --%>
+<%
+	String[] arr = {"홍길동1", "홍길동2", "홍길동3", "홍길동4" };
+	for (String name : arr) {
+		out.print(name + " ");
+	}
+	// JSTL, EL에서 사용할 수 있게 현재 page에서 사용토록 page, request scope에 저장
+	pageContext.setAttribute("attr_names", arr);	
+	//request.setAttribute("attr_names", arr);
+%>	
+	<h2>forEach 문 집합객체 처리</h2>
+	<h3>배열값 출력 - JSTL forEach</h3>
+	<ol>
+	<c:forEach var="name" items="${attr_names }">
+		<li>${name }</li>
+	</c:forEach>
+	</ol>
+	<hr><hr>
 	
+	<%-- ==== forTokens ==== --%>
+	<h2>forTokens 태그 : 문자열 자르기</h2>
+	<c:set var="names" value="김유신,이순신/홍길동,일지매/둘리,고길동" />
+	<p>문자열 데이터 : ${names }</p>
+	
+	<h3>forTokens 태그 사용 / 구분자로 문자열 자르기</h3>
+	<c:forTokens var="name" items="${names }" delims="/">
+		<p>${name }</p>
+	</c:forTokens>
+	<hr>
+	
+	<h3>forTokens 태그 사용 , 구분자로 문자열 자르기</h3>
+	<c:forTokens var="name" items="${names }" delims=",">
+		<p>${name }</p>
+	</c:forTokens>
+	<hr>
 	
 	<br><br><br><br><br><br><br><br>
 	<br><br><br><br><br><br><br><br>
