@@ -19,7 +19,7 @@
 
 	//2. DB에 입력 처리
 	//2-1. SqlSession 객체 생성
-	SqlSession ss = DBService.getFactory().openSession(true);  //자동커밋상태로 세션객체 생성
+	SqlSession ss = DBService.getFactory().openSession(true); //자동커밋상태로 세션객체 생성
 	
 	//2-2. SqlSession 객체 사용 DB에 입력
 	try {
