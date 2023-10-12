@@ -1,0 +1,39 @@
+--// ROWNUM은 별칭을 사용하면 1(첫번째) 데이터가 아닌 
+SELECT *
+    FROM (SELECT ROWNUM AS RNUM, B.*
+         FROM (SELECT *
+                FROM BBS
+                ORDER BY BBS_IDX DESC) B
+            )
+WHERE RNUM BETWEEN 4 AND 6
+;
+
+SELECT ROWNUM, B.*
+ FROM (SELECT *
+        FROM BBS
+        ORDER BY BBS_IDX DESC) B
+WHERE ROWNUM BETWEEN 1 AND 6
+;
+
+SELECT B.* 
+FROM BBS B
+ORDER BY BBS_IDX DESC
+;
+
+
+SELECT COUNT(*) AS CNT FROM BBS;
+
+--// 코멘트 최신 댓글부터 조회!
+SELECT * FROM COMMENTS 
+WHERE BBS_IDX = 10
+ORDER BY COMMENT_IDX DESC
+;
+
+------------------------------------
+
+// 조회
+SELECT * FROM BBS WHERE BBS_IDX = 10;
+
+SELECT * FROM COMMENTS WHERE BBS_IDX = 10;
+
+SELECT * FROM BBS WHERE BBS_IDX = 10;
