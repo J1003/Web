@@ -50,6 +50,14 @@ public class BbsDAO {
 		return vo;
 	}
 	
+	//게시글 입력처리
+	public static int insert(BbsVO bvo) {
+		SqlSession ss = DBService.getFactory().openSession(true);
+		int result = ss.insert("BBS.insert", bvo);
+		ss.close();
+		return result;
+	}
+	
 	// ======= 댓글 ========
 	// 게시글에 딸린 댓글 목록
 	public static List<CommentVO> getCommList(int bbsIdx) {
