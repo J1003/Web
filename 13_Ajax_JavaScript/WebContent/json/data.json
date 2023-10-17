@@ -1,0 +1,5 @@
+{ "products" : [
+	{"name": "우유", "price": 1000}, 
+	{"name": "음료수", "price": 800}, 
+	{"name": "녹차", "price": 1500}
+] }
