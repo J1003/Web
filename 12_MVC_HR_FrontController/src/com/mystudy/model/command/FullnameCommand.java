@@ -1,10 +1,14 @@
 package com.mystudy.model.command;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mystudy.model.dao.EmployeeDAO;
+import com.mystudy.model.vo.EmployeeVO;
 
 public class FullnameCommand implements Command {
 
@@ -15,14 +19,16 @@ public class FullnameCommand implements Command {
 		String name = request.getParameter("name");
 		System.out.println(">> FullnameCommand name : " + name);
 		
-		String path = null;
 		if (name == null) {
-			path = "fullname.jsp";
-		} else {
-			path = "fullnameList.jsp";
-		}
+			return "fullname.jsp";
+		} 
 		
-		return path;
+		//전달받은 이름으로 DB데이터 조회 후 목록페이지로 이동
+		List<EmployeeVO> list = EmployeeDAO.getFullnameList(name);
+		request.setAttribute("list", list);
+		
+		return "fullnameList.jsp";
 	}
 
 }
+

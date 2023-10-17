@@ -18,6 +18,9 @@
 	function fullname_search() {
 		location.href = "controller?type=fullname";
 	}
+	function search_go() {
+		location.href = "controller?type=search";
+	}
 </script>
 </head>
 <body>
@@ -25,5 +28,6 @@
 	<button onclick="all_search()">전체보기(list)</button>
 	<button onclick="dept_search()">부서코드검색(dept)</button>
 	<button onclick="fullname_search()">이름으로검색(fullname)</button>
+	<button onclick="search_go()">동적검색(search)</button>
 </body>
 </html>

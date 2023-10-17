@@ -15,6 +15,37 @@
 		WHERE DEPARTMENT_ID = #{deptno}
 		ORDER BY EMPLOYEE_ID
 	</select>
+	
+	<!-- 성명으로 검색(조회) -->
+	<select id="fullnameList" parameterType="string" resultType="employeeVO">
+		SELECT *
+		FROM EMPLOYEES
+		WHERE FIRST_NAME = INITCAP(#{name})
+		   OR LAST_NAME = INITCAP(#{name})
+		ORDER BY EMPLOYEE_ID	
+	</select>
+	
+	<!-- 동적검색 -->
+	<select id="search" parameterType="map" resultType="employeeVO">
+		SELECT *
+		FROM EMPLOYEES
+		<where>
+			<if test="idx == 0">
+				EMPLOYEE_ID = #{keyword}
+			</if>
+			<if test="idx == 1">
+				FIRST_NAME = INITCAP(#{keyword}) OR LAST_NAME = INITCAP(#{keyword})
+			</if>
+			<if test="idx == 2">
+				JOB_ID = UPPER(#{keyword})
+			</if>
+			<if test="idx == 3">
+				DEPARTMENT_ID = #{keyword}
+			</if>
+		</where>
+		ORDER BY EMPLOYEE_ID	
+	</select>
+	
 </mapper>
 
 

@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이름검색결과</title>
+<title>동적검색결과</title>
 </head>
 <body>
-	<h1>직원 목록 - 성명검색결과 [ fullnameList.jsp ]</h1>
+	<h1>동적검색결과 [ searchList.jsp ]</h1>
 	<h3>사번, 성명, 직종, 부서코드</h3>
 	<ul>
 	<c:forEach var="vo" items="${list }">
