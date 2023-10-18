@@ -20,7 +20,7 @@ public class GetJsonMembersController extends HttpServlet {
 	protected void doGet(HttpServletRequest requesst, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("::: GetJsonMembersController doGet() 실행~!");
 		
-		//한글깨짐방지!
+		//한글깨짐 방지를 위한 문자타입(UTF-8) 처리
 		response.setContentType("text/html;charset=UTF-8");  
 		
 		//DB 데이터 가져오기

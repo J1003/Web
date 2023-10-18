@@ -22,5 +22,17 @@ public class MemberDAO {
 		}
 		return list;
 	}
+	
+	public static List<MemberVO> getListNameLike(String name) {
+		List<MemberVO> list = null;
+	
+		try (SqlSession ss = DBService.getFactory().openSession()) { //기본적으로 true라고 생각하면 됨
+			list = ss.selectList("members.searchName", name);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }
 

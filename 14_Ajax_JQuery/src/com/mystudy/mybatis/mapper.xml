@@ -8,4 +8,12 @@
 		SELECT * FROM MEMBERS ORDER BY NAME
 	</select>
 	
+	<!-- 이름으로 검색 -->
+	<select id="searchName" parameterType="string" resultType="com.mystudy.ajax.vo.MemberVO">
+		SELECT *
+		FROM MEMBERS
+		WHERE NAME LIKE '%'|| #{name} ||'%' 
+		ORDER BY NAME	
+	</select>
+	
 </mapper>

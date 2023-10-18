@@ -17,7 +17,7 @@
 			type : "get",
 			dataType : "json", //응답 받을 데이터 타입(형식)
 			success : function(respData){
-				alert(">> Ajax 처리 성공 - 응답받은 데이터 : " + respData);
+				alert(">> Ajax 처리 성공 - 응답받은 데이터 : " + data);
 				console.log(respData);
 				console.log(respData.list);
 				
@@ -85,6 +85,25 @@
 			dataType : "json", // data : 서버로 전달하는 데이터 / dataType : 응답받는 데이터 타입
 			success : function(data) { // 성공하면~
 				alert("Ajax 처리 성공 - 응답받은 데이터 : " + data);
+				alert(">> Ajax 처리 성공 - 응답받은 데이터 : " + data);
+				console.log(data);
+				console.log(data.list);
+				
+				//전달받은 JSON 데이터 사용 tr 태그 만들고 화면출력
+				let htmlTag = "";
+				let alist = data.list; //JSON 객체의 속성명 "list"의 값 추출
+				$.each(alist, function(index, member){
+					//console.log("this.name : " + this.name);
+					//console.log("member.name : " + member.name);
+					htmlTag += "<tr>";
+					htmlTag += "<td>" + this.idx + "</td>";
+					htmlTag += "<td>" + this.name + "</td>";
+					htmlTag += "<td>" + this["age"] + "</td>";
+					htmlTag += "<td>" + this["addr"] + "</td>";
+					htmlTag += "<td>" + this["regdate"] + "</td>";
+					htmlTag += "</tr>";
+				});
+				$("#dispData").html(htmlTag);
 			},
 			error : function() { // 실패하면~
 				alert("실패!!")
